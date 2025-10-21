@@ -19,6 +19,7 @@ class TextNode():
             and node_1.text_type == node_2.text_type
             and node_1.url == node_2.url):
             return True
+        return False
         
     def __repr__(self):
         return f"TextNode({self.text}, {self.text_type.value}, {self.url})"
