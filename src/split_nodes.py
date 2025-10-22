@@ -7,39 +7,60 @@ def split_nodes_image(old_nodes):
 
     for node in old_nodes:
         if node.text_type != TextType.TEXT:
+            new_nodes.append(node)
             continue
 
         text = node.text
-        extracted_text = extract_markdown_images(text)
+        current = text
+        images = extract_markdown_images(text)
 
-        text_replace = text.replace("[", "-").replace("]", "-").replace("(", "-").replace(")", "-")
-        text_split = text_replace.split("-")
+        if len(images) == 0:
+            new_nodes.append(node)
+            continue
 
-
-
-        # if len(text_split) % 2 == 0:
-        #     raise Exception("Not valid Markdown text")
-
-        for i in range(len(text_split)):
-            str = text_split[i]
-
-            if str == "":
-                continue
-            elif i % 2 == 0 or i == 0 and str not in extracted_text:
-                new_nodes.append(TextNode(str, TextType.TEXT))
-            else:
-                new_nodes.append(TextNode(str, TextType.IMAGE, text_split[i + 2]))
-
-
-
-
-
+        for image in images:
+            sections = current.split(f"![{image[0]}]({image[1]})", 1)
+            if len(sections) != 2:
+                raise Exception("Not valid Markdown")
+            if sections[0] != "":
+                new_nodes.append(TextNode(sections[0], TextType.TEXT))
+            new_nodes.append(TextNode(image[0], TextType.IMAGE, image[1]))
+            current = sections[1]
+        if current != "":
+            new_nodes.append(TextNode(current, TextType.TEXT))
     return new_nodes
 
 
 
+
 def split_nodes_link(old_nodes):
-    pass
+    new_nodes = []
+
+    for node in old_nodes:
+        if node.text_type != TextType.TEXT:
+            new_nodes.append(node)
+            continue
+
+        text = node.text
+        current = text 
+        links = extract_markdown_links(text)
+
+        if len(links) == 0:
+            new_nodes.append(node)
+            continue
+
+        for link in links:
+            sections = current.split(f"[{link[0]}]({link[1]})")
+            if len(sections) != 2:
+                raise Exception("Not valid Markdown")
+            if sections[0] != "":
+                new_nodes.append(TextNode(sections[0], TextType.TEXT))
+            new_nodes.append(TextNode(link[0], TextType.LINK, link[1]))
+            current = sections[1]
+        if current != "":
+            new_nodes.append(TextNode(current, TextType.TEXT))
+    return new_nodes
+    
 
 
-print(split_nodes_image([TextNode("This is text with a link ![to boot dev](https://www.boot.dev) and ![to youtube](https://www.youtube.com/@bootdotdev)", TextType.TEXT)]))
+# print(split_nodes_link([TextNode("This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)", TextType.TEXT)]))
