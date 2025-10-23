@@ -2,7 +2,8 @@ import unittest
 
 from textnode import TextNode, TextType
 from htmlnode import LeafNode, HTMLNode
-from text_node_to_html_node import text_node_to_html_node
+from text_node_to_html_node import text_node_to_html_node, text_to_textnodes
+
 
 class TestTextNodeToHTML(unittest.TestCase):
     def test_text(self):
@@ -30,3 +31,30 @@ class TestTextNodeToHTML(unittest.TestCase):
         self.assertEqual(html_node.tag, "img")
         self.assertEqual(html_node.props, {"src": "www.image-link.com", "alt": "This is alt text"})
         self.assertEqual(html_node.value, " ")
+
+
+class TestTextToTextNode(unittest.TestCase):
+    def test_text_to_text_node(self):
+        text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+        self.assertEqual(
+            [
+    TextNode("This is ", TextType.TEXT),
+    TextNode("text", TextType.BOLD),
+    TextNode(" with an ", TextType.TEXT),
+    TextNode("italic", TextType.ITALIC),
+    TextNode(" word and a ", TextType.TEXT),
+    TextNode("code block", TextType.CODE),
+    TextNode(" and an ", TextType.TEXT),
+    TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+    TextNode(" and a ", TextType.TEXT),
+    TextNode("link", TextType.LINK, "https://boot.dev"),
+],
+    text_to_textnodes(text)
+        )
+    
+    def test_text_no_change(self):
+        text = "This is plain text no work should be done"
+        self.assertEqual(
+            [TextNode(text, TextType.TEXT)],
+            text_to_textnodes(text)
+        )

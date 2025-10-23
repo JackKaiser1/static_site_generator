@@ -68,10 +68,10 @@ class TestSplitNodes(unittest.TestCase):
 
     # def test_uneven_split_image(self):
     #     node = TextNode(
-    #         "This is text with an ![linkhttps://i.imgur.com/zjjcJKZ.png) and another ![second link](https://i.imgur.com/3elNhQu.png)",
+    #         "This is text with an image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
     #         TextType.TEXT,
     #     )
-    #     self.assertRaises(Exception, split_nodes_image, node)
+    #     self.assertRaises(Exception, split_nodes_image, [node])
 
     # def test_uneven_split_link(self):
     #     node = TextNode(

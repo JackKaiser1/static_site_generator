@@ -1,4 +1,3 @@
-
 from textnode import TextNode, TextType
 from extract_markdown import extract_markdown_images, extract_markdown_links
 
@@ -10,9 +9,8 @@ def split_nodes_image(old_nodes):
             new_nodes.append(node)
             continue
 
-        text = node.text
-        current = text
-        images = extract_markdown_images(text)
+        current = node.text
+        images = extract_markdown_images(current)
 
         if len(images) == 0:
             new_nodes.append(node)
@@ -20,16 +18,20 @@ def split_nodes_image(old_nodes):
 
         for image in images:
             sections = current.split(f"![{image[0]}]({image[1]})", 1)
+
             if len(sections) != 2:
-                raise Exception("Not valid Markdown")
-            if sections[0] != "":
+                raise ValueError("Not a valid markdown string")
+            elif sections[0] != "":
                 new_nodes.append(TextNode(sections[0], TextType.TEXT))
+
             new_nodes.append(TextNode(image[0], TextType.IMAGE, image[1]))
             current = sections[1]
+
         if current != "":
             new_nodes.append(TextNode(current, TextType.TEXT))
     return new_nodes
 
+        
 
 
 
@@ -41,26 +43,38 @@ def split_nodes_link(old_nodes):
             new_nodes.append(node)
             continue
 
-        text = node.text
-        current = text 
-        links = extract_markdown_links(text)
+        current = node.text
+        links = extract_markdown_links(current)
 
         if len(links) == 0:
             new_nodes.append(node)
             continue
 
         for link in links:
-            sections = current.split(f"[{link[0]}]({link[1]})")
+            sections = current.split(f"[{link[0]}]({link[1]})", 1)
+
             if len(sections) != 2:
-                raise Exception("Not valid Markdown")
-            if sections[0] != "":
+                raise ValueError("Not a valid markdown string")
+            elif sections[0] != "":
                 new_nodes.append(TextNode(sections[0], TextType.TEXT))
+
             new_nodes.append(TextNode(link[0], TextType.LINK, link[1]))
             current = sections[1]
+
         if current != "":
             new_nodes.append(TextNode(current, TextType.TEXT))
     return new_nodes
     
 
 
-# print(split_nodes_link([TextNode("This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)", TextType.TEXT)]))
+
+
+
+
+
+
+# node = TextNode(
+#     "This is text with an [image](https://i.imgur.com/zjjcJKZ.png) and another [second image](https://i.imgur.com/3elNhQu.png)",
+#     TextType.TEXT
+# )
+# print(split_nodes_link([node]))
