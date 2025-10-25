@@ -14,7 +14,7 @@ class TestMarkdownBlocks(unittest.TestCase):
 
     def test_heading_to_blocktype(self):
         heading = "###### This is a heading"
-        self.assertEqual(block_to_block_type(heading), BlockType.HEADING)
+        self.assertEqual(block_to_block_type(heading), (BlockType.HEADING, 6))
 
     def test_fail_heading_to_blocktype(self):
         heading = "######### This is not a heading"

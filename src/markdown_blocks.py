@@ -24,7 +24,7 @@ def block_to_block_type(block):
     if (pound_count >= 1 
         and pound_count < 7 
         and next_char == " "):
-        return BlockType.HEADING
+        return BlockType.HEADING, pound_count
     
     newline_block = block.split("\n")
     quote_symbol = 0
