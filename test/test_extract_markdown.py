@@ -1,11 +1,6 @@
 import unittest
-import sys
 
-# sys.path.append("src")
-
-# from src import extract_markdown
-
-from src.extract_markdown import extract_markdown_links, extract_markdown_images
+from src.split_nodes_img_link import extract_markdown_links, extract_markdown_images
 
 class TestExtractMarkdown(unittest.TestCase):
     def test_extract_markdown_images(self):

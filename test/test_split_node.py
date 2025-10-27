@@ -1,12 +1,8 @@
 import unittest
-import sys
 
-# sys.path.append("src")
-
-# from src import textnode, split_nodes
-
-from src.textnode import TextNode, TextType
-from src.split_nodes import split_nodes_image, split_nodes_link
+from src.textnode import TextNode
+from src.type_enums import TextType
+from src.split_nodes_img_link import split_nodes_image, split_nodes_link
 
 class TestSplitNodes(unittest.TestCase):
     def test_split_images(self):
@@ -71,16 +67,3 @@ class TestSplitNodes(unittest.TestCase):
                 new_nodes,
             )
 
-    # def test_uneven_split_image(self):
-    #     node = TextNode(
-    #         "This is text with an image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
-    #         TextType.TEXT,
-    #     )
-    #     self.assertRaises(Exception, split_nodes_image, [node])
-
-    # def test_uneven_split_link(self):
-    #     node = TextNode(
-    #         "This is text with an [link](https://i.imgur.com/zjjcJKZ.png) and another [second link](https://i.imgur.com/3elNhQu.png)",
-    #         TextType.TEXT,
-    #     )
-    #     self.assertRaises(Exception, split_nodes_link, [node])

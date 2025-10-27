@@ -1,17 +1,24 @@
-from .textnode import TextNode, TextType
-from .extract_markdown import extract_markdown_images, extract_markdown_links
+import re
+from .textnode import TextNode
+from .type_enums import TextType
 
-def split_nodes_image(old_nodes):
+
+def extract_markdown_images(text) -> list[tuple]:
+    return re.findall(r"!\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+
+def extract_markdown_links(text) -> list[tuple]:
+    return re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+
+def split_nodes_image(old_nodes) -> list:
     new_nodes = []
 
     for node in old_nodes:
-        if node.text_type != TextType.TEXT:
-            new_nodes.append(node)
-            continue
-
         current = node.text
         images = extract_markdown_images(current)
 
+        if node.text_type != TextType.TEXT:
+            new_nodes.append(node)
+            continue
         if len(images) == 0:
             new_nodes.append(node)
             continue
@@ -31,21 +38,17 @@ def split_nodes_image(old_nodes):
             new_nodes.append(TextNode(current, TextType.TEXT))
     return new_nodes
 
-        
 
-
-
-def split_nodes_link(old_nodes):
+def split_nodes_link(old_nodes) -> list:
     new_nodes = []
 
     for node in old_nodes:
-        if node.text_type != TextType.TEXT:
-            new_nodes.append(node)
-            continue
-
         current = node.text
         links = extract_markdown_links(current)
 
+        if node.text_type != TextType.TEXT:
+            new_nodes.append(node)
+            continue
         if len(links) == 0:
             new_nodes.append(node)
             continue
@@ -65,16 +68,3 @@ def split_nodes_link(old_nodes):
             new_nodes.append(TextNode(current, TextType.TEXT))
     return new_nodes
     
-
-
-
-
-
-
-
-
-# node = TextNode(
-#     "This is text with an [image](https://i.imgur.com/zjjcJKZ.png) and another [second image](https://i.imgur.com/3elNhQu.png)",
-#     TextType.TEXT
-# )
-# print(split_nodes_link([node]))

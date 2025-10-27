@@ -1,13 +1,8 @@
 import unittest
-import sys
 
-# sys.path.append("src")
-
-# from src import textnode, htmlnode, text_node_to_html_node
-
-from src.textnode import TextNode, TextType
-# from src.htmlnode import LeafNode, HTMLNode
-from src.text_node_to_html_node import text_node_to_html_node, text_to_textnodes
+from src.textnode import TextNode
+from src.type_enums import TextType
+from src.text_to_node import text_node_to_html_node, text_to_textnodes
 
 
 class TestTextNodeToHTML(unittest.TestCase):

@@ -6,10 +6,10 @@ class HTMLNode():
         self.children = children
         self.props = props
 
-    def to_html(self):
+    def to_html(self) -> Exception:
         raise NotImplementedError
 
-    def props_to_html(self):
+    def props_to_html(self) -> str:
         prop_items = self.props.items()
         prop_str = ""
 
@@ -17,7 +17,7 @@ class HTMLNode():
             prop_str += f" {tag}={value}" 
         return prop_str
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"HTMLNode({self.tag}, {self.value}, {self.children}, {self.props})"
     
 
@@ -26,7 +26,7 @@ class LeafNode(HTMLNode):
         super().__init__(tag, value, props)
         self.props = props
 
-    def to_html(self):
+    def to_html(self) -> str:
         if not self.value:
             raise ValueError("LeafNode must have a value")
         elif not self.tag:
@@ -45,7 +45,7 @@ class ParentNode(HTMLNode):
         self.children = children
         self.props = props
 
-    def to_html(self):
+    def to_html(self) -> str:
         inner_str = ""
         if not self.tag:
             raise ValueError("ParentNode must have a tag")
@@ -62,34 +62,5 @@ class ParentNode(HTMLNode):
                 return f"<{self.tag}{self.props_to_html()}>{inner_str}</{self.tag}>"
 
             
-
-
-# grandchild_node = LeafNode("b", "grandchild")
-# child_node = ParentNode("span", [grandchild_node])
-# parent_node = ParentNode("div", [child_node])
-# print(parent_node.to_html())
-                
-# child_node = LeafNode(tag="span", value="child", props={"color": "red"})
-# parent_node = ParentNode(tag="div", children=[child_node], props={"href": "www.boot.dev"})
-
-# print(parent_node.to_html())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         

@@ -1,6 +1,5 @@
-from .markdown_to_blocks import markdown_to_blocks
-from .markdown_blocks import block_to_block_type 
-from .markdown_blocks import BlockType
+from .markdown_blocks import block_to_block_type, markdown_to_blocks
+from .type_enums import BlockType
 from .htmlnode import HTMLNode, LeafNode, ParentNode
 
 

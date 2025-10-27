@@ -1,9 +1,4 @@
 import unittest
-import sys
-
-# sys.path.append("src")
-
-# from src import htmlnode
 
 from src.htmlnode import HTMLNode, LeafNode, ParentNode
 

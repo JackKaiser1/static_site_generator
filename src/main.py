@@ -1,6 +1,5 @@
-# print("hello world")
-
-from .textnode import TextNode, TextType
+from .textnode import TextNode
+from .type_enums import TextType
 
 def main():
     node = TextNode("hello world", TextType.BOLD, "https://www.boot.dev")

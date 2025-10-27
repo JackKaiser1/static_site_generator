@@ -1,11 +1,7 @@
 import unittest
-import sys
 
-# sys.path.append("src")
-
-# from src import textnode
-
-from src.textnode import TextNode, TextType
+from src.textnode import TextNode
+from src.type_enums import TextType
 
 
 class TestTextNode(unittest.TestCase):
