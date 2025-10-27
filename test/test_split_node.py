@@ -1,7 +1,12 @@
 import unittest
+import sys
 
-from textnode import TextNode, TextType
-from split_nodes import split_nodes_image, split_nodes_link
+# sys.path.append("src")
+
+# from src import textnode, split_nodes
+
+from src.textnode import TextNode, TextType
+from src.split_nodes import split_nodes_image, split_nodes_link
 
 class TestSplitNodes(unittest.TestCase):
     def test_split_images(self):

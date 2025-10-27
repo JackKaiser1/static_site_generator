@@ -1,7 +1,10 @@
 import unittest
+import sys
 
-from textnode import TextNode, TextType
-from split_nodes_delimiter import split_nodes_delimiter
+
+
+from src.textnode import TextNode, TextType
+from src.split_nodes_delimiter import split_nodes_delimiter
 
 class TestSplitNodes(unittest.TestCase):
     def test_raise_exception(self):

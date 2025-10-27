@@ -1,6 +1,11 @@
 import unittest
+import sys
 
-from htmlnode import HTMLNode, LeafNode, ParentNode
+# sys.path.append("src")
+
+# from src import htmlnode
+
+from src.htmlnode import HTMLNode, LeafNode, ParentNode
 
 class TestHTMLNode(unittest.TestCase):
     def test_props_not_none(self):

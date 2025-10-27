@@ -1,7 +1,7 @@
-from markdown_to_blocks import markdown_to_blocks
-from markdown_blocks import block_to_block_type 
-from markdown_blocks import BlockType
-from htmlnode import HTMLNode, LeafNode, ParentNode
+from .markdown_to_blocks import markdown_to_blocks
+from .markdown_blocks import block_to_block_type 
+from .markdown_blocks import BlockType
+from .htmlnode import HTMLNode, LeafNode, ParentNode
 
 
 def markdown_to_html(markdown):

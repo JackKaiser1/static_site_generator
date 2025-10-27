@@ -1,6 +1,11 @@
 import unittest
+import sys
 
-from markdown_blocks import BlockType, block_to_block_type
+# sys.path.append("src")
+
+# from src import markdown_blocks
+
+from src.markdown_blocks import BlockType, block_to_block_type
 
 class TestMarkdownBlocks(unittest.TestCase):
 
