@@ -51,3 +51,11 @@ def block_to_block_type(block) -> BlockType:
     else:
         return BlockType.PARAGRAPH
     
+# print(markdown_to_blocks("""
+# This is **bolded** paragraph
+# text in a p
+# tag here
+
+# This is another paragraph with _italic_ text and `code` here
+
+# """))
