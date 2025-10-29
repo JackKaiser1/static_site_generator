@@ -44,7 +44,6 @@ This is a **bold** paragraph
 
         node = markdown_to_html_node(md)
         html = node.to_html()
-        # print(html)
         self.assertEqual(
             html,
             "<div><h5>This is a heading</h5><p>This is a <b>bold</b> paragraph</p></div>"
@@ -58,7 +57,6 @@ This is a **bold** paragraph
 
         node = markdown_to_html_node(md)
         html = node.to_html()
-        # print(html)
         self.assertEqual(
             html,
             "<div><blockquote>This is the first line \nSecond line \nThird line</blockquote></div>"

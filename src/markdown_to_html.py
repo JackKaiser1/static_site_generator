@@ -7,67 +7,59 @@ import re
 
 
 def markdown_to_html_node(markdown) -> ParentNode:
-    blocks_list = markdown_to_blocks(markdown)
-    return htmlnode_from_block(blocks_list)
-
-
-def htmlnode_from_block(blocks_list) -> str:
     all_children = []
+    blocks_list = markdown_to_blocks(markdown)
     for block in blocks_list:
-        result = block_to_block_type(block)
-        if isinstance(result, tuple):
-            block_type, heading_num = result
-        else:
-            block_type = result
-
-        if block_type != BlockType.CODE:
-            block = " ".join(block.split())
-            children = text_to_children(block)
-
-
-        if block_type == BlockType.CODE:
-            block = "".join(block.split("```"))
-            block = block.removeprefix("\n")
-        if block_type == BlockType.HEADING:
-            block = block.removeprefix("#" * heading_num + " ")
-        if block_type == BlockType.QUOTE:
-            block = " ".join(block.split())
-            block = "\n".join(block.split(">"))
-            block = block.removeprefix("\n")
-
-
-        if block_type == BlockType.PARAGRAPH:
-            if children == None:
-                all_children.append(LeafNode("p", block))
-            else:
-                all_children.append(ParentNode("p", children))
-
-        elif block_type == BlockType.HEADING:
-            if children == None:
-                all_children.append(LeafNode(f"h{heading_num}", block))
-            else:
-                all_children.append(ParentNode(f"h{heading_num}", children))
-
-        elif block_type == BlockType.CODE:
-                code_node = text_node_to_html_node(TextNode(block, TextType.CODE))
-                all_children.append(ParentNode("pre", [code_node]))
-
-        elif block_type == BlockType.QUOTE:
-            if children == None:
-                all_children.append(LeafNode("blockquote", block))
-            else:
-                all_children.append(ParentNode("blockquote", children))
-
-        elif block_type == BlockType.UNORDERED_LIST:
-            all_children.append(list_blocks(block_type, block))
-
-        elif block_type == BlockType.ORDERED_LIST:
-            all_children.append(list_blocks(block_type, block))
-
+        html_node = htmlnode_from_block(block)
+        all_children.append(html_node)
     return ParentNode("div", all_children)
 
 
-def text_to_children(text):
+def htmlnode_from_block(block) -> HTMLNode:
+    result = block_to_block_type(block)
+    if isinstance(result, tuple):
+        block_type, heading_num = result
+    else:
+        block_type = result
+
+    if block_type != BlockType.CODE:
+        block = " ".join(block.split())
+        children = text_to_children(block)
+
+
+    if block_type == BlockType.PARAGRAPH:
+        if children == None:
+            return LeafNode("p", block)
+        else:
+            return ParentNode("p", children)
+
+    elif block_type == BlockType.HEADING:
+        block = block.removeprefix("#" * heading_num + " ")
+        if children == None:
+            return LeafNode(f"h{heading_num}", block)
+        else:
+            return ParentNode(f"h{heading_num}", children)
+
+    elif block_type == BlockType.CODE:
+        block = "".join(block.split("```")).removeprefix("\n")
+        code_node = text_node_to_html_node(TextNode(block, TextType.CODE))
+        return ParentNode("pre", [code_node])
+
+    elif block_type == BlockType.QUOTE:
+        block = "\n".join(block.split(">")).removeprefix("\n")
+        if children == None:
+            return LeafNode("blockquote", block)
+        else:
+            return ParentNode("blockquote", children)
+
+    elif block_type == BlockType.UNORDERED_LIST:
+        return list_blocks(block_type, block)
+
+    elif block_type == BlockType.ORDERED_LIST:
+        return list_blocks(block_type, block)
+
+
+def text_to_children(text) -> list[HTMLNode]:
     textnode_list = text_to_textnodes(text)
     if textnode_list == [TextNode(text, TextType.TEXT)]:
         return None
@@ -77,7 +69,7 @@ def text_to_children(text):
     return child_list
 
 
-def list_blocks(block_type, block):
+def list_blocks(block_type, block) -> ParentNode:
     if block_type == BlockType.UNORDERED_LIST:
         parent_tag = "ul"
         list_items = block.split("- ")
@@ -96,6 +88,10 @@ def list_blocks(block_type, block):
                 list_children.append(ParentNode("li", item_children))
 
     return ParentNode(parent_tag, list_children)
+
+
+
+    
     
 
 
