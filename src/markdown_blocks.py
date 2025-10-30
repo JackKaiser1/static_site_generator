@@ -1,4 +1,4 @@
-from .type_enums import BlockType
+from type_enums import BlockType
 
 def markdown_to_blocks(markdown) -> list:
     split_strings = markdown.split("\n\n")

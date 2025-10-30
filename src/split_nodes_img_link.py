@@ -1,6 +1,6 @@
 import re
-from .textnode import TextNode
-from .type_enums import TextType
+from textnode import TextNode
+from type_enums import TextType
 
 
 def extract_markdown_images(text) -> list[tuple]:

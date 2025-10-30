@@ -1,8 +1,8 @@
-from .markdown_blocks import block_to_block_type, markdown_to_blocks
-from .htmlnode import HTMLNode, LeafNode, ParentNode
-from .text_to_node import text_to_textnodes, text_node_to_html_node
-from .textnode import TextNode
-from .type_enums import BlockType, TextType
+from markdown_blocks import block_to_block_type, markdown_to_blocks
+from htmlnode import HTMLNode, LeafNode, ParentNode
+from text_to_node import text_to_textnodes, text_node_to_html_node
+from textnode import TextNode
+from type_enums import BlockType, TextType
 import re
 
 
@@ -46,7 +46,7 @@ def htmlnode_from_block(block) -> HTMLNode:
         return ParentNode("pre", [code_node])
 
     elif block_type == BlockType.QUOTE:
-        block = "\n".join(block.split(">")).removeprefix("\n")
+        block = "\n".join(block.split(">")).removeprefix("\n").strip()
         if children == None:
             return LeafNode("blockquote", block)
         else:
@@ -88,6 +88,19 @@ def list_blocks(block_type, block) -> ParentNode:
                 list_children.append(ParentNode("li", item_children))
 
     return ParentNode(parent_tag, list_children)
+
+
+
+def extract_title(markdown):
+    block_list = markdown_to_blocks(markdown)
+    for block in block_list:
+        if block.startswith("# "):
+            return block.removeprefix("# ")
+    raise Exception("No header found in markdown string")
+
+# print(extract_title("# Hello"))
+
+
 
 
 

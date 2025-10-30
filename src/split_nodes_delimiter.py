@@ -1,5 +1,5 @@
-from .textnode import TextNode
-from .type_enums import TextType
+from textnode import TextNode
+from type_enums import TextType
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type) -> list:
     new_nodes = []
