@@ -10,10 +10,6 @@ def main():
         basepath = sys.argv[1]
     except:
         basepath = "/"
-    # if len(sys.argv) != 2:
-    #     basepath = "/"
-    # else:
-    #     basepath = sys.argv[1]
 
     dst_dir = "docs"
     src_dir = "static"
