@@ -19,6 +19,7 @@ def htmlnode_from_block(block) -> HTMLNode:
     result = block_to_block_type(block)
     if isinstance(result, tuple):
         block_type, heading_num = result
+        block = block.removeprefix("#" * heading_num + " ")
     else:
         block_type = result
 
@@ -34,7 +35,6 @@ def htmlnode_from_block(block) -> HTMLNode:
             return ParentNode("p", children)
 
     elif block_type == BlockType.HEADING:
-        block = block.removeprefix("#" * heading_num + " ")
         if children == None:
             return LeafNode(f"h{heading_num}", block)
         else:
