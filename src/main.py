@@ -3,17 +3,23 @@ from type_enums import TextType
 from generate_page import generate_page, generate_pages_recursive
 import os
 import shutil
+import sys
 
 def main():
-    dst_dir = "public"
+    if len(sys.argv) != 2:
+        basepath = "/"
+    else:
+        basepath = sys.argv[1]
+
+    dst_dir = "docs"
     src_dir = "static"
     working_dir = "/home/jackk/dev/github.com/jackkaiser1/static_site_generator/"
     del_and_copy(working_dir, dst_dir, src_dir)
 
     from_path = "/home/jackk/dev/github.com/jackkaiser1/static_site_generator/content/"
     template_path = "/home/jackk/dev/github.com/jackkaiser1/static_site_generator/template.html"
-    dest_path = "/home/jackk/dev/github.com/jackkaiser1/static_site_generator/public/"
-    generate_pages_recursive(from_path, template_path, dest_path)
+    dest_path = "/home/jackk/dev/github.com/jackkaiser1/static_site_generator/docs/"
+    generate_pages_recursive(from_path, template_path, dest_path, basepath)
 
 
 def del_and_copy(working_dir, dst_dir, src_dir):
