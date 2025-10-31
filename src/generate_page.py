@@ -19,7 +19,6 @@ def generate_page(from_path, template_path, dest_path, basepath):
     html_string_full = template_content.replace("{{ Title }}", title).replace("{{ Content }}", html_content)
     html_string_full = html_string_full.replace("href=/", f"href={basepath}").replace("src=/", f"src={basepath}").replace("href=\"/", f"href=\"{basepath}")
 
-    # if os.path.isfile(dest_path):
     with open(dest_path, "w") as file:
         file.write(html_string_full)
 

@@ -47,7 +47,4 @@ def copy_dir(source_path, destination_path):
 
 
     
-
-
-
 main()
